@@ -2,7 +2,6 @@
 
 namespace DigitalOceanDropletBundle\Service;
 
-use AopDoctrineBundle\Attribute\Transactional;
 use DigitalOceanAccountBundle\Client\DigitalOceanClient;
 use DigitalOceanAccountBundle\Service\DigitalOceanConfigService;
 use DigitalOceanAccountBundle\Service\SSHKeyService;
@@ -12,15 +11,16 @@ use DigitalOceanDropletBundle\Request\CreateDropletRequest;
 use DigitalOceanDropletBundle\Request\DeleteDropletRequest;
 use DigitalOceanDropletBundle\Request\GetDropletRequest;
 use DigitalOceanDropletBundle\Request\ListDropletsRequest;
-use DoctrineEnhanceBundle\Service\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Tourze\Symfony\AopDoctrineBundle\Attribute\Transactional;
 
 class DropletService
 {
     public function __construct(
         private readonly DigitalOceanClient $client,
         private readonly DigitalOceanConfigService $configService,
-        private readonly EntityManager $entityManager,
+        private readonly EntityManagerInterface $entityManager,
         private readonly DropletRepository $dropletRepository,
         private readonly LoggerInterface $logger,
         private readonly SSHKeyService $sshKeyService,
