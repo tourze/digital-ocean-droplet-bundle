@@ -265,7 +265,9 @@ class Droplet implements PlainArrayInterface, AdminArrayInterface
             'tags' => $this->getTags(),
             'volumeIds' => $this->getVolumeIds(),
             'createdAt' => $this->getCreatedAt()?->format('Y-m-d H:i:s'),
-        ] + $this->retrieveTimestampArray();
+            'createTime' => $this->getCreateTime()?->format('Y-m-d H:i:s'),
+            'updateTime' => $this->getUpdateTime()?->format('Y-m-d H:i:s'),
+        ];
     }
 
     public function toAdminArray(): array
