@@ -15,7 +15,7 @@
     "symfony/framework-bundle": "^6.4",
     "symfony/yaml": "^6.4 || ^7.1",
     "tourze/symfony-aop-doctrine-bundle": "0.0.*",
-    "tourze/digital-ocean-account-bundle": "0.0.*",
+    "tourze/digital-ocean-account-bundle": "0.1.*",
     "tourze/enum-extra": "~0.0.5",
     "tourze/arrayable": "0.0.*",
     "psr/log": "^3|^2|^1"
