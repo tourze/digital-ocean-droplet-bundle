@@ -4,7 +4,6 @@ namespace DigitalOceanDropletBundle\Service;
 
 use DigitalOceanAccountBundle\Client\DigitalOceanClient;
 use DigitalOceanAccountBundle\Service\DigitalOceanConfigService;
-use DigitalOceanAccountBundle\Service\SSHKeyService;
 use DigitalOceanDropletBundle\Entity\Droplet;
 use DigitalOceanDropletBundle\Repository\DropletRepository;
 use DigitalOceanDropletBundle\Request\CreateDropletRequest;
