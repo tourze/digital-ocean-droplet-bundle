@@ -1,0 +1,134 @@
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">
+            <i class="fa fa-history"></i>
+            虚拟机操作记录
+        </h5>
+        <div class="card-subtitle text-muted">
+            Droplet ID: {{ droplet.dropletId }} | 名称: {{ droplet.name }}
+        </div>
+    </div>
+    
+    <div class="card-body">
+        {% if actions is empty %}
+            <div class="alert alert-info">
+                <i class="fa fa-info-circle"></i>
+                暂无操作记录
+            </div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>操作ID</th>
+                            <th>操作类型</th>
+                            <th>状态</th>
+                            <th>开始时间</th>
+                            <th>完成时间</th>
+                            <th>资源信息</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for action in actions %}
+                            <tr>
+                                <td>
+                                    <code>{{ action.id|default('') }}</code>
+                                </td>
+                                <td>
+                                    <span class="badge badge-secondary">
+                                        {% set actionLabels = {
+                                            'reboot': '重启',
+                                            'power_off': '关闭电源',
+                                            'power_on': '开启电源',
+                                            'shutdown': '关机',
+                                            'restore': '还原',
+                                            'password_reset': '重置密码',
+                                            'resize': '调整大小',
+                                            'rebuild': '重建',
+                                            'rename': '重命名',
+                                            'change_kernel': '更改内核',
+                                            'enable_ipv6': '启用IPv6',
+                                            'enable_backups': '启用备份',
+                                            'disable_backups': '禁用备份',
+                                            'enable_private_networking': '启用私有网络',
+                                            'snapshot': '创建快照'
+                                        } %}
+                                        {{ actionLabels[action.type]|default(action.type|default('未知')) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% set status = action.status|default('') %}
+                                    {% if status == 'completed' %}
+                                        <span class="badge badge-success">已完成</span>
+                                    {% elseif status == 'in-progress' %}
+                                        <span class="badge badge-primary">进行中</span>
+                                    {% elseif status == 'errored' %}
+                                        <span class="badge badge-danger">错误</span>
+                                    {% else %}
+                                        <span class="badge badge-secondary">{{ status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if action.started_at is defined and action.started_at %}
+                                        {{ action.started_at|date('Y-m-d H:i:s') }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if action.completed_at is defined and action.completed_at %}
+                                        {{ action.completed_at|date('Y-m-d H:i:s') }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if action.resource_type is defined %}
+                                        <small class="text-muted">
+                                            {{ action.resource_type|default('') }}
+                                            {% if action.resource_id is defined %}
+                                                #{{ action.resource_id }}
+                                            {% endif %}
+                                        </small>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {% if meta.total is defined %}
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <small class="text-muted">
+                        共 {{ meta.total }} 条记录
+                    </small>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .table th {
+        border-top: none;
+    }
+    
+    .badge {
+        font-size: 0.75em;
+    }
+    
+    .card-subtitle {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+    
+    code {
+        color: #e83e8c;
+        background-color: #f8f9fa;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+    }
+</style> 

@@ -25,11 +25,6 @@ class Droplet implements PlainArrayInterface, AdminArrayInterface
     #[ORM\Column(type: Types::INTEGER, options: ['comment' => 'ID'])]
     private ?int $id = 0;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     #[ORM\Column(type: Types::INTEGER, options: ['comment' => '虚拟机ID'])]
     #[IndexColumn]
     private int $dropletId;
@@ -85,24 +80,9 @@ class Droplet implements PlainArrayInterface, AdminArrayInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true, options: ['comment' => '更新时间'])]
     private ?\DateTimeInterface $updateTime = null;
 
-    public function setCreateTime(?\DateTimeInterface $createdAt): void
+    public function getId(): ?int
     {
-        $this->createTime = $createdAt;
-    }
-
-    public function getCreateTime(): ?\DateTimeInterface
-    {
-        return $this->createTime;
-    }
-
-    public function setUpdateTime(?\DateTimeInterface $updateTime): void
-    {
-        $this->updateTime = $updateTime;
-    }
-
-    public function getUpdateTime(): ?\DateTimeInterface
-    {
-        return $this->updateTime;
+        return $this->id;
     }
 
     public function getDropletId(): int
@@ -283,5 +263,25 @@ class Droplet implements PlainArrayInterface, AdminArrayInterface
     public function retrieveAdminArray(): array
     {
         return $this->toAdminArray();
+    }
+
+    public function setCreateTime(?\DateTimeInterface $createdAt): void
+    {
+        $this->createTime = $createdAt;
+    }
+
+    public function getCreateTime(): ?\DateTimeInterface
+    {
+        return $this->createTime;
+    }
+
+    public function setUpdateTime(?\DateTimeInterface $updateTime): void
+    {
+        $this->updateTime = $updateTime;
+    }
+
+    public function getUpdateTime(): ?\DateTimeInterface
+    {
+        return $this->updateTime;
     }
 }
