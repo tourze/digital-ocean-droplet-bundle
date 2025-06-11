@@ -423,7 +423,7 @@ class DropletActionService
 
                 $attempt++;
                 sleep($interval);
-            } catch (\Throwable $e) {
+            } catch  (\Throwable $e) {
                 $this->logger->error('检查DigitalOcean虚拟机操作状态失败', [
                     'dropletId' => $dropletId,
                     'actionId' => $actionId,
