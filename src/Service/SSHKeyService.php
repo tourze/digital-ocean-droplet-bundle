@@ -50,7 +50,7 @@ class SSHKeyService
             }
 
             return $sshKeys;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger->error('获取DigitalOcean SSH密钥失败', [
                 'error' => $e->getMessage(),
             ]);
@@ -78,7 +78,7 @@ class SSHKeyService
                 'meta' => $response['meta'] ?? [],
                 'links' => $response['links'] ?? [],
             ];
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger->error('获取DigitalOcean SSH密钥列表失败', [
                 'error' => $e->getMessage(),
             ]);

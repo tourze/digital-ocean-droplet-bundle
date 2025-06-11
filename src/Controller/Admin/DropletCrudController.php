@@ -216,7 +216,7 @@ class DropletCrudController extends AbstractCrudController
             $droplets = $this->dropletService->syncDroplets();
             
             $this->addFlash('success', sprintf('成功同步 %d 台虚拟机', count($droplets)));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->addFlash('danger', '同步失败: ' . $e->getMessage());
         }
 
@@ -240,7 +240,7 @@ class DropletCrudController extends AbstractCrudController
             
             $this->addFlash('success', sprintf('虚拟机 "%s" 重启操作已提交，操作ID: %s', 
                 $droplet->getName(), $action['id'] ?? 'unknown'));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->addFlash('danger', '重启失败: ' . $e->getMessage());
         }
 
@@ -265,7 +265,7 @@ class DropletCrudController extends AbstractCrudController
             
             $this->addFlash('success', sprintf('虚拟机 "%s" 关机操作已提交，操作ID: %s', 
                 $droplet->getName(), $action['id'] ?? 'unknown'));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->addFlash('danger', '关机失败: ' . $e->getMessage());
         }
 
@@ -290,7 +290,7 @@ class DropletCrudController extends AbstractCrudController
             
             $this->addFlash('success', sprintf('虚拟机 "%s" 开机操作已提交，操作ID: %s', 
                 $droplet->getName(), $action['id'] ?? 'unknown'));
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->addFlash('danger', '开机失败: ' . $e->getMessage());
         }
 
@@ -321,7 +321,7 @@ class DropletCrudController extends AbstractCrudController
                     'meta' => $actionsData['meta'] ?? [],
                 ]),
             ]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->addFlash('danger', '获取操作记录失败: ' . $e->getMessage());
             
             return $this->redirect($request->headers->get('referer') ?? $this->generateUrl('admin', [
