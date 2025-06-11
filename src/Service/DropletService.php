@@ -135,7 +135,7 @@ class DropletService
             if (isset($dropletData['created_at'])) {
                 try {
                     $droplet->setCreatedAt(new \DateTimeImmutable($dropletData['created_at']));
-                } catch  (\Throwable $e) {
+                } catch (\Throwable $e) {
                     $this->logger->warning('无法解析虚拟机创建时间', [
                         'dropletId' => $dropletId,
                         'created_at' => $dropletData['created_at'],
@@ -206,7 +206,7 @@ class DropletService
             ]);
 
             return true;
-        } catch  (\Throwable $e) {
+        } catch (\Throwable $e) {
             $this->logger->error('DigitalOcean虚拟机删除失败', [
                 'dropletId' => $dropletId,
                 'error' => $e->getMessage(),
@@ -259,7 +259,7 @@ class DropletService
                     'attempt' => $attempt + 1,
                     'maxAttempts' => $maxAttempts,
                 ]);
-            } catch  (\Throwable $e) {
+            } catch (\Throwable $e) {
                 $this->logger->error('检查DigitalOcean虚拟机状态失败', [
                     'dropletId' => $dropletId,
                     'error' => $e->getMessage(),
