@@ -19,14 +19,14 @@ class AdminMenu implements MenuProviderInterface
 
     public function __invoke(ItemInterface $item): void
     {
-        if (!$item->getChild('云服务管理')) {
+        if ($item->getChild('云服务管理') === null) {
             $item->addChild('云服务管理');
         }
 
         $cloudMenu = $item->getChild('云服务管理');
         
         // DigitalOcean 子菜单
-        if (!$cloudMenu->getChild('DigitalOcean')) {
+        if ($cloudMenu->getChild('DigitalOcean') === null) {
             $cloudMenu->addChild('DigitalOcean');
         }
         

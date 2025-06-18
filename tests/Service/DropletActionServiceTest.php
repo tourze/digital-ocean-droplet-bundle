@@ -136,8 +136,6 @@ class DropletActionServiceTest extends TestCase
             );
         
         $result = $this->service->waitForActionCompletion($dropletId, $actionId, $expectedStatus, $maxAttempts, $interval);
-        
-        $this->assertIsArray($result);
         $this->assertEquals('completed', $result['status']);
     }
     

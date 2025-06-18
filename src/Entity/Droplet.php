@@ -14,7 +14,7 @@ use Tourze\EasyAdmin\Attribute\Column\ListColumn;
 
 #[ORM\Entity(repositoryClass: DropletRepository::class)]
 #[ORM\Table(name: 'ims_digital_ocean_droplet', options: ['comment' => 'DigitalOcean虚拟机'])]
-class Droplet implements PlainArrayInterface, AdminArrayInterface
+class Droplet implements PlainArrayInterface, AdminArrayInterface, \Stringable
 {
     use TimestampableAware;
     #[ListColumn(order: -1)]
@@ -67,6 +67,11 @@ class Droplet implements PlainArrayInterface, AdminArrayInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getDropletId(): int

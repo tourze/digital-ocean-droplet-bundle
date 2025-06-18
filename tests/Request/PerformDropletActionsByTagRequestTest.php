@@ -26,8 +26,6 @@ class PerformDropletActionsByTagRequestTest extends TestCase
     {
         $request = new PerformDropletActionsByTagRequest(self::TAG_NAME, DropletActionType::REBOOT);
         $options = $request->getRequestOptions();
-        
-        $this->assertIsArray($options);
         $this->assertArrayHasKey('json', $options);
         $this->assertArrayHasKey('type', $options['json']);
         $this->assertEquals('reboot', $options['json']['type']);

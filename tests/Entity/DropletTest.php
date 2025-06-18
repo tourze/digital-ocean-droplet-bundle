@@ -100,11 +100,11 @@ class DropletTest extends TestCase
         $droplet->setCreatedAt($now);
         $this->assertSame($now, $droplet->getCreatedAt());
         
-        $updateTime = new \DateTime();
+        $updateTime = new \DateTimeImmutable();
         $droplet->setUpdateTime($updateTime);
         $this->assertSame($updateTime, $droplet->getUpdateTime());
         
-        $createTime = new \DateTime();
+        $createTime = new \DateTimeImmutable();
         $droplet->setCreateTime($createTime);
         $this->assertSame($createTime, $droplet->getCreateTime());
     }
@@ -135,7 +135,6 @@ class DropletTest extends TestCase
         $adminArray = $droplet->toAdminArray();
         
         // 验证 toAdminArray 返回的数组包含所有必要的键
-        $this->assertIsArray($adminArray);
         $this->assertArrayHasKey('dropletId', $adminArray);
         $this->assertArrayHasKey('name', $adminArray);
         $this->assertArrayHasKey('status', $adminArray);
@@ -153,7 +152,6 @@ class DropletTest extends TestCase
         $plainArray = $droplet->retrievePlainArray();
         
         // 验证 retrievePlainArray 返回的数组包含所有必要的键
-        $this->assertIsArray($plainArray);
         $this->assertArrayHasKey('dropletId', $plainArray);
         $this->assertArrayHasKey('name', $plainArray);
         $this->assertArrayHasKey('status', $plainArray);
@@ -171,7 +169,6 @@ class DropletTest extends TestCase
         $adminArray = $droplet->retrieveAdminArray();
         
         // 验证 retrieveAdminArray 返回的数组包含所有必要的键
-        $this->assertIsArray($adminArray);
         $this->assertArrayHasKey('dropletId', $adminArray);
         $this->assertArrayHasKey('name', $adminArray);
         $this->assertArrayHasKey('status', $adminArray);
