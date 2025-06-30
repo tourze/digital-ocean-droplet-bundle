@@ -209,7 +209,7 @@ class DropletCrudController extends AbstractCrudController
     /**
      * 同步虚拟机数据
      */
-    #[AdminAction('sync', 'sync_droplets')]
+    #[AdminAction(routePath: 'sync', routeName: 'sync_droplets')]
     public function syncDroplets(AdminContext $context, Request $request): Response
     {
         try {
@@ -229,7 +229,7 @@ class DropletCrudController extends AbstractCrudController
     /**
      * 重启虚拟机
      */
-    #[AdminAction('{entityId}/reboot', 'reboot_droplet')]
+    #[AdminAction(routePath: '{entityId}/reboot', routeName: 'reboot_droplet')]
     public function rebootDroplet(AdminContext $context, Request $request): Response
     {
         /** @var Droplet $droplet */
@@ -254,7 +254,7 @@ class DropletCrudController extends AbstractCrudController
     /**
      * 关机虚拟机
      */
-    #[AdminAction('{entityId}/shutdown', 'shutdown_droplet')]
+    #[AdminAction(routePath: '{entityId}/shutdown', routeName: 'shutdown_droplet')]
     public function shutdownDroplet(AdminContext $context, Request $request): Response
     {
         /** @var Droplet $droplet */
@@ -279,7 +279,7 @@ class DropletCrudController extends AbstractCrudController
     /**
      * 开机虚拟机
      */
-    #[AdminAction('{entityId}/powerOn', 'power_on_droplet')]
+    #[AdminAction(routePath: '{entityId}/powerOn', routeName: 'power_on_droplet')]
     public function powerOnDroplet(AdminContext $context, Request $request): Response
     {
         /** @var Droplet $droplet */
@@ -304,7 +304,7 @@ class DropletCrudController extends AbstractCrudController
     /**
      * 查看虚拟机操作记录
      */
-    #[AdminAction('{entityId}/actions', 'view_droplet_actions')]
+    #[AdminAction(routePath: '{entityId}/actions', routeName: 'view_droplet_actions')]
     public function viewDropletActions(AdminContext $context, Request $request): Response
     {
         /** @var Droplet $droplet */

@@ -5,6 +5,7 @@ namespace DigitalOceanDropletBundle\Service;
 use DigitalOceanAccountBundle\Client\DigitalOceanClient;
 use DigitalOceanAccountBundle\Service\DigitalOceanConfigService;
 use DigitalOceanDropletBundle\Enum\DropletActionType;
+use DigitalOceanDropletBundle\Exception\DigitalOceanConfigurationException;
 use DigitalOceanDropletBundle\Request\GetDropletActionRequest;
 use DigitalOceanDropletBundle\Request\ListDropletActionsRequest;
 use DigitalOceanDropletBundle\Request\PerformDropletActionRequest;
@@ -27,7 +28,7 @@ class DropletActionService
     {
         $config = $this->configService->getConfig();
         if ($config === null) {
-            throw new \RuntimeException('未配置 DigitalOcean API Key');
+            throw new DigitalOceanConfigurationException('未配置 DigitalOcean API Key');
         }
 
         $request->setApiKey($config->getApiKey());

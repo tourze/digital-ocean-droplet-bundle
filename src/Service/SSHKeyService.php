@@ -4,6 +4,7 @@ namespace DigitalOceanDropletBundle\Service;
 
 use DigitalOceanAccountBundle\Client\DigitalOceanClient;
 use DigitalOceanAccountBundle\Service\DigitalOceanConfigService;
+use DigitalOceanDropletBundle\Exception\DigitalOceanConfigurationException;
 use DigitalOceanDropletBundle\Request\ListSSHKeysRequest;
 use Psr\Log\LoggerInterface;
 
@@ -23,7 +24,7 @@ class SSHKeyService
     {
         $config = $this->configService->getConfig();
         if ($config === null) {
-            throw new \RuntimeException('未配置 DigitalOcean API Key');
+            throw new DigitalOceanConfigurationException('未配置 DigitalOcean API Key');
         }
 
         $request->setApiKey($config->getApiKey());
