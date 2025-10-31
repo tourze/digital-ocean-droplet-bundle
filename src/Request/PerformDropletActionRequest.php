@@ -7,18 +7,18 @@ use DigitalOceanDropletBundle\Enum\DropletActionType;
 
 /**
  * 执行Droplet操作请求
+ *
  * @see https://docs.digitalocean.com/reference/api/digitalocean/#tag/Droplet-Actions/operation/dropletActions_post
  */
 class PerformDropletActionRequest extends DigitalOceanRequest
 {
-    private int $dropletId;
+    /** @var array<string, mixed> */
     private array $payload = [
         'type' => '',
     ];
 
-    public function __construct(int $dropletId, DropletActionType|string $actionType)
+    public function __construct(private readonly int $dropletId, DropletActionType|string $actionType)
     {
-        $this->dropletId = $dropletId;
         $this->payload['type'] = $actionType instanceof DropletActionType ? $actionType->value : $actionType;
     }
 
@@ -110,6 +110,7 @@ class PerformDropletActionRequest extends DigitalOceanRequest
     {
         $this->payload['type'] = DropletActionType::REBUILD->value;
         $this->payload['image'] = $imageId;
+
         return $this;
     }
 
@@ -121,6 +122,7 @@ class PerformDropletActionRequest extends DigitalOceanRequest
         $this->payload['type'] = DropletActionType::RESIZE->value;
         $this->payload['size'] = $size;
         $this->payload['disk'] = $disk;
+
         return $this;
     }
 
@@ -131,6 +133,7 @@ class PerformDropletActionRequest extends DigitalOceanRequest
     {
         $this->payload['type'] = DropletActionType::RENAME->value;
         $this->payload['name'] = $name;
+
         return $this;
     }
 
@@ -141,6 +144,7 @@ class PerformDropletActionRequest extends DigitalOceanRequest
     {
         $request = new self($dropletId, DropletActionType::SNAPSHOT);
         $request->payload['name'] = $name;
+
         return $request;
     }
 
@@ -151,6 +155,7 @@ class PerformDropletActionRequest extends DigitalOceanRequest
     {
         $request = new self($dropletId, DropletActionType::RESTORE);
         $request->payload['image'] = $imageId;
+
         return $request;
     }
 }

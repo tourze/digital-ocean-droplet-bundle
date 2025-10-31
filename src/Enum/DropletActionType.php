@@ -10,13 +10,13 @@ use Tourze\EnumExtra\SelectTrait;
 
 /**
  * Droplet 操作类型枚举
+ *
  * @see https://docs.digitalocean.com/reference/api/digitalocean/#tag/Droplet-Actions/operation/dropletActions_post
  */
 enum DropletActionType: string implements Labelable, Itemable, Selectable
 {
     use ItemTrait;
     use SelectTrait;
-
     case REBOOT = 'reboot';
     case POWER_OFF = 'power_off';
     case POWER_ON = 'power_on';
@@ -33,14 +33,11 @@ enum DropletActionType: string implements Labelable, Itemable, Selectable
     case ENABLE_PRIVATE_NETWORKING = 'enable_private_networking';
     case SNAPSHOT = 'snapshot';
 
-    /**
-     * 获取操作名称标签
-     */
     public function getLabel(): string
     {
         return match ($this) {
             self::REBOOT => '重启',
-            self::POWER_OFF => '关闭电源', 
+            self::POWER_OFF => '关闭电源',
             self::POWER_ON => '开启电源',
             self::SHUTDOWN => '关机',
             self::RESTORE => '还原',

@@ -5,17 +5,34 @@ namespace DigitalOceanDropletBundle\Repository;
 use DigitalOceanDropletBundle\Entity\Droplet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Tourze\PHPUnitSymfonyKernelTest\Attribute\AsRepository;
 
 /**
- * @method Droplet|null find($id, $lockMode = null, $lockVersion = null)
- * @method Droplet|null findOneBy(array $criteria, array $orderBy = null)
- * @method Droplet[] findAll()
- * @method Droplet[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Droplet>
  */
+#[AsRepository(entityClass: Droplet::class)]
 class DropletRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Droplet::class);
+    }
+
+    public function save(Droplet $entity, bool $flush = true): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Droplet $entity, bool $flush = true): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 }

@@ -3,16 +3,22 @@
 namespace DigitalOceanDropletBundle\Tests\Request;
 
 use DigitalOceanDropletBundle\Request\DeleteDropletRequest;
-use PHPUnit\Framework\TestCase;
-use ReflectionClass;
+use HttpClientBundle\Tests\Request\RequestTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-class DeleteDropletRequestTest extends TestCase
+/**
+ * @internal
+ */
+#[CoversClass(DeleteDropletRequest::class)]
+final class DeleteDropletRequestTest extends RequestTestCase
 {
     private const DROPLET_ID = 12345;
+
     private DeleteDropletRequest $request;
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->request = new DeleteDropletRequest(self::DROPLET_ID);
     }
 
@@ -29,7 +35,7 @@ class DeleteDropletRequestTest extends TestCase
     public function testGetRequestMethod(): void
     {
         // 使用反射获取私有属性 $method
-        $reflection = new ReflectionClass($this->request);
+        $reflection = new \ReflectionClass($this->request);
         $property = $reflection->getProperty('method');
         $property->setAccessible(true);
         $method = $property->getValue($this->request);
@@ -40,9 +46,8 @@ class DeleteDropletRequestTest extends TestCase
     public function testSetApiKey(): void
     {
         $apiKey = 'test-api-key';
-        $result = $this->request->setApiKey($apiKey);
+        $this->request->setApiKey($apiKey);
 
-        $this->assertInstanceOf(DeleteDropletRequest::class, $result);
         $this->assertEquals($apiKey, $this->request->getApiKey());
     }
 }

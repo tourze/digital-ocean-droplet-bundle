@@ -6,12 +6,16 @@ use DigitalOceanAccountBundle\Request\DigitalOceanRequest;
 
 /**
  * 创建虚拟机请求
+ *
  * @see https://docs.digitalocean.com/reference/api/digitalocean/#tag/Droplets/operation/droplets_create
  */
 class CreateDropletRequest extends DigitalOceanRequest
 {
     protected string $method = 'POST';
+
     protected string $endpoint = 'droplets';
+
+    /** @var array<string, mixed> */
     protected array $payload = [
         'name' => '',
         'region' => 'sgp1', // 默认新加坡
@@ -29,65 +33,65 @@ class CreateDropletRequest extends DigitalOceanRequest
         return '/droplets';
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): void
     {
         $this->payload['name'] = $name;
-        return $this;
     }
 
-    public function setRegion(string $region): self
+    public function setRegion(string $region): void
     {
         $this->payload['region'] = $region;
-        return $this;
     }
 
-    public function setSize(string $size): self
+    public function setSize(string $size): void
     {
         $this->payload['size'] = $size;
-        return $this;
     }
 
-    public function setImage(string $image): self
+    public function setImage(string $image): void
     {
         $this->payload['image'] = $image;
-        return $this;
     }
 
-    public function setSshKeys(array $sshKeys): self
+    /**
+     * @param array<string> $sshKeys
+     */
+    public function setSshKeys(array $sshKeys): void
     {
         $this->payload['ssh_keys'] = $sshKeys;
-        return $this;
     }
 
-    public function setBackups(bool $backups): self
+    public function setBackups(bool $backups): void
     {
         $this->payload['backups'] = $backups;
-        return $this;
     }
 
-    public function setIpv6(bool $ipv6): self
+    public function setIpv6(bool $ipv6): void
     {
         $this->payload['ipv6'] = $ipv6;
-        return $this;
     }
 
-    public function setMonitoring(bool $monitoring): self
+    public function setMonitoring(bool $monitoring): void
     {
         $this->payload['monitoring'] = $monitoring;
-        return $this;
     }
 
-    public function setTags(array $tags): self
+    /**
+     * @param array<string> $tags
+     */
+    public function setTags(array $tags): void
     {
         $this->payload['tags'] = $tags;
-        return $this;
     }
 
-    public function addTag(string $tag): self
+    public function addTag(string $tag): void
     {
-        if (!in_array($tag, $this->payload['tags'])) {
-            $this->payload['tags'][] = $tag;
+        $tags = $this->payload['tags'];
+        assert(is_array($tags), 'Tags must be an array');
+
+        if (!in_array($tag, $tags, true)) {
+            $tags[] = $tag;
+            $this->payload['tags'] = $tags;
         }
-        return $this;
     }
 }

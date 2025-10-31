@@ -3,14 +3,20 @@
 namespace DigitalOceanDropletBundle\Tests\Request;
 
 use DigitalOceanDropletBundle\Request\CreateDropletRequest;
-use PHPUnit\Framework\TestCase;
+use HttpClientBundle\Tests\Request\RequestTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-class CreateDropletRequestTest extends TestCase
+/**
+ * @internal
+ */
+#[CoversClass(CreateDropletRequest::class)]
+final class CreateDropletRequestTest extends RequestTestCase
 {
     private CreateDropletRequest $request;
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->request = new CreateDropletRequest();
     }
 
@@ -23,7 +29,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $name = 'test-droplet';
         $this->request->setName($name);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($name, $options['name']);
     }
@@ -32,7 +38,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $region = 'nyc1';
         $this->request->setRegion($region);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($region, $options['region']);
     }
@@ -41,7 +47,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $size = 's-2vcpu-2gb';
         $this->request->setSize($size);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($size, $options['size']);
     }
@@ -50,16 +56,16 @@ class CreateDropletRequestTest extends TestCase
     {
         $image = 'ubuntu-20-04-x64';
         $this->request->setImage($image);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($image, $options['image']);
     }
 
     public function testSetSshKeys(): void
     {
-        $sshKeys = [12345, 67890];
+        $sshKeys = ['12345', '67890'];
         $this->request->setSshKeys($sshKeys);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($sshKeys, $options['ssh_keys']);
     }
@@ -68,7 +74,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $backups = true;
         $this->request->setBackups($backups);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($backups, $options['backups']);
     }
@@ -77,7 +83,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $ipv6 = true;
         $this->request->setIpv6($ipv6);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($ipv6, $options['ipv6']);
     }
@@ -86,7 +92,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $monitoring = false;
         $this->request->setMonitoring($monitoring);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($monitoring, $options['monitoring']);
     }
@@ -95,7 +101,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $tags = ['web', 'production'];
         $this->request->setTags($tags);
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals($tags, $options['tags']);
     }
@@ -104,7 +110,7 @@ class CreateDropletRequestTest extends TestCase
     {
         $this->request->setTags(['web']);
         $this->request->addTag('production');
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals(['web', 'production'], $options['tags']);
     }
@@ -113,34 +119,49 @@ class CreateDropletRequestTest extends TestCase
     {
         $this->request->setTags(['web']);
         $this->request->addTag('web');
-        
+
         $options = $this->getRequestOptionsPayload();
         $this->assertEquals(['web'], $options['tags']);
     }
 
     public function testFluidInterface(): void
     {
-        $this->assertInstanceOf(
-            CreateDropletRequest::class,
-            $this->request->setName('test')
-                ->setRegion('nyc1')
-                ->setSize('s-1vcpu-1gb')
-                ->setImage('ubuntu-20-04-x64')
-                ->setSshKeys([12345])
-                ->setBackups(true)
-                ->setIpv6(true)
-                ->setMonitoring(true)
-                ->setTags(['web'])
-                ->addTag('production')
-        );
+        // 所有setter方法现在返回void，不支持链式调用
+        // 改为分别调用并验证最终状态
+        $this->request->setName('test');
+        $this->request->setRegion('nyc1');
+        $this->request->setSize('s-1vcpu-1gb');
+        $this->request->setImage('ubuntu-20-04-x64');
+        $this->request->setSshKeys(['12345']);
+        $this->request->setBackups(true);
+        $this->request->setIpv6(true);
+        $this->request->setMonitoring(true);
+        $this->request->setTags(['web']);
+        $this->request->addTag('production');
+
+        // 验证所有设置都正确应用
+        $options = $this->getRequestOptionsPayload();
+        $this->assertEquals('test', $options['name']);
+        $this->assertEquals('nyc1', $options['region']);
+        $this->assertEquals('s-1vcpu-1gb', $options['size']);
+        $this->assertEquals('ubuntu-20-04-x64', $options['image']);
+        $this->assertEquals([12345], $options['ssh_keys']);
+        $this->assertTrue($options['backups']);
+        $this->assertTrue($options['ipv6']);
+        $this->assertTrue($options['monitoring']);
+        $this->assertEquals(['web', 'production'], $options['tags']);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function getRequestOptionsPayload(): array
     {
         $reflection = new \ReflectionClass($this->request);
         $property = $reflection->getProperty('payload');
         $property->setAccessible(true);
-        
+
+        /** @var array<string, mixed> */
         return $property->getValue($this->request);
     }
-} 
+}

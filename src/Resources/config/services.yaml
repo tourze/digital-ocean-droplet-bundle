@@ -15,8 +15,3 @@ services:
     resource: '../../Repository/'
   DigitalOceanDropletBundle\Service\:
     resource: '../../Service/'
-
-  # 菜单服务
-  DigitalOceanDropletBundle\Service\AdminMenu:
-    tags:
-      - { name: tourze.easy_admin_menu.provider }

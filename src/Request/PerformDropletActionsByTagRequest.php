@@ -7,18 +7,18 @@ use DigitalOceanDropletBundle\Enum\DropletActionType;
 
 /**
  * 根据标签执行Droplet操作请求
+ *
  * @see https://docs.digitalocean.com/reference/api/digitalocean/#tag/Droplet-Actions/operation/dropletActions_post_byTag
  */
 class PerformDropletActionsByTagRequest extends DigitalOceanRequest
 {
-    private string $tagName;
+    /** @var array<string, mixed> */
     private array $payload = [
         'type' => '',
     ];
 
-    public function __construct(string $tagName, DropletActionType|string $actionType)
+    public function __construct(private readonly string $tagName, DropletActionType|string $actionType)
     {
-        $this->tagName = $tagName;
         $this->payload['type'] = $actionType instanceof DropletActionType ? $actionType->value : $actionType;
     }
 
@@ -102,6 +102,7 @@ class PerformDropletActionsByTagRequest extends DigitalOceanRequest
     {
         $request = new self($tagName, DropletActionType::SNAPSHOT);
         $request->payload['name'] = $name;
+
         return $request;
     }
 }

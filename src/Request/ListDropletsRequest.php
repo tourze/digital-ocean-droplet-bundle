@@ -6,12 +6,15 @@ use DigitalOceanAccountBundle\Request\DigitalOceanRequest;
 
 /**
  * 获取虚拟机列表请求
+ *
  * @see https://docs.digitalocean.com/reference/api/digitalocean/#tag/Droplets/operation/droplets_list
  */
 class ListDropletsRequest extends DigitalOceanRequest
 {
     private int $page = 1;
+
     private int $perPage = 20;
+
     private ?string $tagName = null;
 
     public function getRequestPath(): string
@@ -26,7 +29,7 @@ class ListDropletsRequest extends DigitalOceanRequest
             'per_page' => $this->perPage,
         ];
 
-        if ($this->tagName !== null) {
+        if (null !== $this->tagName) {
             $query['tag_name'] = $this->tagName;
         }
 
@@ -35,21 +38,18 @@ class ListDropletsRequest extends DigitalOceanRequest
         ];
     }
 
-    public function setPage(int $page): self
+    public function setPage(int $page): void
     {
         $this->page = $page;
-        return $this;
     }
 
-    public function setPerPage(int $perPage): self
+    public function setPerPage(int $perPage): void
     {
         $this->perPage = $perPage;
-        return $this;
     }
 
-    public function setTagName(?string $tagName): self
+    public function setTagName(?string $tagName): void
     {
         $this->tagName = $tagName;
-        return $this;
     }
 }
