@@ -4,7 +4,7 @@ namespace DigitalOceanDropletBundle\Tests\Request;
 
 use DigitalOceanDropletBundle\Enum\DropletActionType;
 use DigitalOceanDropletBundle\Request\PerformDropletActionRequest;
-use HttpClientBundle\Tests\Request\RequestTestCase;
+use HttpClientBundle\Test\RequestTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 

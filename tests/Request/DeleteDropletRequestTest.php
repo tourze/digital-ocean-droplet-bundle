@@ -3,7 +3,7 @@
 namespace DigitalOceanDropletBundle\Tests\Request;
 
 use DigitalOceanDropletBundle\Request\DeleteDropletRequest;
-use HttpClientBundle\Tests\Request\RequestTestCase;
+use HttpClientBundle\Test\RequestTestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
