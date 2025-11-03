@@ -72,12 +72,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testGetEntityFqcn(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         $client->request('GET', '/admin');
         $this->assertSame(Droplet::class, DropletCrudController::getEntityFqcn());
@@ -85,12 +80,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testControllerConfigurationMethods(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         $controller = self::getService(DropletCrudController::class);
 
@@ -102,13 +92,8 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testControllerHasRequiredActionMethods(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
+        $client = $this->createAuthenticatedClient();
         $reflection = new \ReflectionClass(DropletCrudController::class);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
 
         $requiredMethods = [
             'syncDroplets',
@@ -127,12 +112,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testControllerHasValidRequiredFieldConfiguration(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         $controller = self::getService(DropletCrudController::class);
 
@@ -145,12 +125,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testControllerMethodsExistForCustomActions(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 通过 HTTP 层测试控制器可访问性
         $client->request('GET', '/admin');
@@ -177,12 +152,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testRequiredFieldsHaveValidationConstraints(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 通过 HTTP 层访问管理员面板
         $client->request('GET', '/admin');
@@ -202,12 +172,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testSearchFunctionalityWithConfiguredFields(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 通过 HTTP 层测试搜索功能
         $client->request('GET', '/admin');
@@ -232,12 +197,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testFiltersConfigurationForSearchFunctionality(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 通过 HTTP 层测试过滤器功能
         $client->request('GET', '/admin');
@@ -260,12 +220,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testValidationErrorsForRequiredFields(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 通过 HTTP 层测试验证功能
         $client->request('GET', '/admin');
@@ -298,12 +253,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testValidationConstraintsForRequiredFieldsWithBlankValues(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 通过 HTTP 层测试验证功能
         $client->request('GET', '/admin');
@@ -333,12 +283,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testCustomActionsAreAccessible(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 通过 HTTP 层测试自定义动作功能
         $client->request('GET', '/admin');
@@ -379,12 +324,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testSyncDropletsAction(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 模拟访问同步操作
         $client->request('GET', '/admin/digital-ocean/droplet/sync');
@@ -398,12 +338,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testRebootDropletAction(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 创建测试 Droplet 实体
         $droplet = new Droplet();
@@ -436,12 +371,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testShutdownDropletAction(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 创建测试 Droplet 实体
         $droplet = new Droplet();
@@ -474,12 +404,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testPowerOnDropletAction(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 创建测试 Droplet 实体
         $droplet = new Droplet();
@@ -512,12 +437,7 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
 
     public function testViewDropletActionsAction(): void
     {
-        $client = self::createClientWithDatabase([
-            DigitalOceanDropletBundle::class => ['all' => true],
-        ]);
-
-        $this->createAdminUser('admin@test.com', 'password');
-        $this->loginAsAdmin($client, 'admin@test.com', 'password');
+        $client = $this->createAuthenticatedClient();
 
         // 创建测试 Droplet 实体
         $droplet = new Droplet();
