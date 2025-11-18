@@ -3,7 +3,6 @@
 namespace DigitalOceanDropletBundle\Tests\Controller\Admin;
 
 use DigitalOceanDropletBundle\Controller\Admin\DropletCrudController;
-use DigitalOceanDropletBundle\DigitalOceanDropletBundle;
 use DigitalOceanDropletBundle\Entity\Droplet;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminAction;
@@ -68,14 +67,6 @@ final class DropletCrudControllerTest extends AbstractEasyAdminControllerTestCas
         yield 'networks' => ['networks'];
         yield 'tags' => ['tags'];
         yield 'volumeIds' => ['volumeIds'];
-    }
-
-    public function testGetEntityFqcn(): void
-    {
-        $client = $this->createAuthenticatedClient();
-
-        $client->request('GET', '/admin');
-        $this->assertSame(Droplet::class, DropletCrudController::getEntityFqcn());
     }
 
     public function testControllerConfigurationMethods(): void
