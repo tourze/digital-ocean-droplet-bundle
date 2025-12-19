@@ -4,7 +4,7 @@ namespace DigitalOceanDropletBundle\DependencyInjection;
 
 use Tourze\SymfonyDependencyServiceLoader\AutoExtension;
 
-class DigitalOceanDropletExtension extends AutoExtension
+final class DigitalOceanDropletExtension extends AutoExtension
 {
     protected function getConfigDir(): string
     {
